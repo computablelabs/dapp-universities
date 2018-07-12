@@ -1,0 +1,20 @@
+{
+  "author": "Geoff Kinder <geoff.kinder@gmail.com>",
+  "name": "cinco-de-crypto-on-chain",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_ENV=development PORT=3000 node server.js",
+    "start": "NODE_ENV=production node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.16.3",
+    "next": "^6.1.1",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  }
+}
