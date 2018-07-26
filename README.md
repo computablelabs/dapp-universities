@@ -6,4 +6,4 @@ Code for outputting an integer list using `computable.js`.
 
 - Copy `.env.example` to `.env`
 - Update `.env` with your ganache connection string
-`npm run dev`
+- `npm run dev`
