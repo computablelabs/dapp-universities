@@ -1,36 +1,73 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { address as getAddress } from 'reputable/dist/redux/selectors/token';
+import { apply } from 'reputable/dist/redux/action-creators/registry';
+import { getParticipants, getRegistryAddress } from 'reputable/dist/redux/selectors';
 
 import { Header } from '../components';
 
 class Page extends React.Component {
-  static async getInitialProps({ ctx }) {
-    console.log('index fetch initial props: ', ctx);
+  constructor() {
+    super();
 
-    return {};
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    console.log('index mounted: ', this.props);
+  handleSubmit(e) {
+    e.preventDefault();
+
+    const {
+      registryAddress,
+      participants,
+      submitApplication,
+    } = this.props;
+
+    const userAddress = participants.length ? participants[1].address : '';
+
+    const formData = new FormData(e.target);
+    const value = formData.get('university');
+
+    submitApplication(registryAddress, value, userAddress, 100);
   }
 
   render() {
     return (
       <div>
         <Header />
-        <h1>Next.js App</h1>
+        <h1>Enter the name of your university</h1>
+
+        <form onSubmit={this.handleSubmit}>
+          <input type="text" name="university" />
+          <button type="submit">
+            Add
+          </button>
+        </form>
       </div>
     );
   }
 }
 
+Page.propTypes = {
+  registryAddress: PropTypes.string,
+  participants: PropTypes.arrayOf(PropTypes.object),
+  submitApplication: PropTypes.func,
+};
+
+Page.defaultProps = {
+  registryAddress: '',
+  participants: [],
+  submitApplication: () => {},
+};
+
 const mapStateToProps = (state) => ({
-  address: getAddress(state),
+  registryAddress: getRegistryAddress(state),
+  participants: getParticipants(state),
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  submitApplication: apply,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page);
 
