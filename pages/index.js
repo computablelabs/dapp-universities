@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Router from 'next/router';
 import { connect } from 'react-redux';
 
 import { apply } from 'reputable/dist/redux/action-creators/registry';
@@ -14,7 +15,7 @@ class Page extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault();
 
     const {
@@ -28,7 +29,8 @@ class Page extends React.Component {
     const formData = new FormData(e.target);
     const value = formData.get('university');
 
-    submitApplication(registryAddress, value, userAddress, 100);
+    await submitApplication(registryAddress, value, userAddress, 100);
+    Router.push('/listings');
   }
 
   render() {
