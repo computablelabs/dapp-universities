@@ -2,6 +2,11 @@
 
 A decentralized application built for tutorial purposes.
 
+## Requirements
+
+- npm
+- Ganache CLI: If you don't have Ganache CLI, do `npm install ganache-cli`
+
 ## Getting started
 
 - `git clone git@github.com:computablelabs/dapp-universities.git`
