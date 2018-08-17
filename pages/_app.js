@@ -92,11 +92,11 @@ const initializeBlockchain = async ({ dispatch, getState }) => {
   // await dispatch(approve(votingAddress, 450 * 1000, { from: voterAccount }));
 
   // apply listing to registry
-  await dispatch(apply(registryAddress, 'university 1', voterAccount, 100));
-  await dispatch(apply(registryAddress, 'university 2', voterAccount, 100));
-  await dispatch(apply(registryAddress, 'university 3', voterAccount, 100));
-  await dispatch(apply(registryAddress, 'university 4', voterAccount, 100));
-  await dispatch(apply(registryAddress, 'university 5', voterAccount, 100));
+  await dispatch(apply(registryAddress, 'Deep Springs College', voterAccount, 100));
+  await dispatch(apply(registryAddress, 'Maharishi University', voterAccount, 100));
+  await dispatch(apply(registryAddress, 'Naropa University', voterAccount, 100));
+  await dispatch(apply(registryAddress, 'Bard College at Simon’s Rock', voterAccount, 100));
+  await dispatch(apply(registryAddress, 'Antioch College', voterAccount, 100));
 };
 
 class AppWrapper extends App {
