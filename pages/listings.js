@@ -1,42 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
-import { getApplications } from 'reputable/dist/redux/selectors';
+import { Header, Listings } from '../components';
 
-import { Header } from '../components';
-
-class Listings extends React.Component {
+class ListingsPage extends React.Component {
   render() {
-    const { applications } = this.props;
-
     return (
       <div>
         <Header />
-        <h1>Listings</h1>
-        {
-          applications.map((application, idx) => (
-            <div key={idx}>{application.listing}</div>
-          ))
-        }
+        <Listings />
       </div>
     );
   }
 }
 
-Listings.propTypes = {
-  applications: PropTypes.arrayOf(PropTypes.object),
-};
-
-Listings.defaultProps = {
-  applications: [],
-};
-
-const mapStateToProps = (state) => ({
-  applications: getApplications(state),
-});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Listings);
+export default ListingsPage;
 
