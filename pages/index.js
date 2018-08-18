@@ -1,24 +1,35 @@
 import React from 'react';
-import Router from 'next/router';
-
-import { Header, ListingForm } from '../components';
+import Link from 'next/link';
 
 class IndexPage extends React.Component {
-  constructor() {
-    super();
-
-    this.handleAfterSubmit = this.handleAfterSubmit.bind(this);
-  }
-
-  handleAfterSubmit() {
-    Router.push('/listings');
-  }
-
   render() {
     return (
       <div>
-        <Header />
-        <ListingForm afterSubmit={this.onAfterSubmit} />
+        <style jsx>
+          {`
+            .user-link {
+              display: block;
+            }
+          `}
+        </style>
+
+        <Link href="/listings/new">
+          <a className="user-link">
+            University Founder
+          </a>
+        </Link>
+
+        <Link href="/listings">
+          <a className="user-link">
+            Student
+          </a>
+        </Link>
+
+        <Link href="/">
+          <a className="user-link">
+            Reviewer
+          </a>
+        </Link>
       </div>
     );
   }
