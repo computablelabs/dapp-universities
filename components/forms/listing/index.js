@@ -12,7 +12,10 @@ class ListingForm extends React.Component {
   constructor() {
     super();
 
+    this.refUniversity = React.createRef();
+
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.clearFields = this.clearFields.bind(this);
   }
 
   async handleSubmit(e) {
@@ -34,6 +37,11 @@ class ListingForm extends React.Component {
     await onBeforeSubmit();
     await submitApplication(registryAddress, value, userAddress, 100);
     await onAfterSubmit();
+    this.clearFields();
+  }
+
+  clearFields() {
+    this.refUniversity.current.value = '';
   }
 
   render() {
@@ -41,7 +49,12 @@ class ListingForm extends React.Component {
       <div>
         <h1>Enter the name of your university</h1>
         <form onSubmit={this.handleSubmit}>
-          <input type="text" name="university" />
+          <input
+            ref={this.refUniversity}
+            type="text"
+            name="university"
+          />
+
           <button type="submit">
             Add
           </button>
