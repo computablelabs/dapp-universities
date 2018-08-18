@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
-import { getApplications } from 'reputable/dist/redux/selectors';
-
-import { Header } from '../components';
+import Container from './container';
 
 class Listings extends React.Component {
   render() {
@@ -12,7 +9,6 @@ class Listings extends React.Component {
 
     return (
       <div>
-        <Header />
         <h1>Listings</h1>
         {
           applications.map((application, idx) => (
@@ -32,11 +28,5 @@ Listings.defaultProps = {
   applications: [],
 };
 
-const mapStateToProps = (state) => ({
-  applications: getApplications(state),
-});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Listings);
+export default Container(Listings);
 

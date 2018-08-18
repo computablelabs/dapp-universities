@@ -30,10 +30,7 @@ rules:
       - config/*.js
   import/no-unresolved: 0
   import/prefer-default-export: 0
-  jsx-a11y/anchor-is-valid:
-    - error
-    - components:
-      - a
+  jsx-a11y/anchor-is-valid: 0
   react/jsx-filename-extension:
     - 1
     - extensions:
@@ -42,6 +39,7 @@ rules:
   react/no-array-index-key: 0
   react/no-danger: 0
   react/no-direct-mutation-state: 1
+  react/prefer-stateless-function: 0
   react/sort-comp:
     - 1
     - order:

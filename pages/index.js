@@ -1,75 +1,39 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Router from 'next/router';
-import { connect } from 'react-redux';
+import Link from 'next/link';
 
-import { apply } from 'reputable/dist/redux/action-creators/registry';
-import { getParticipants, getRegistryAddress } from 'reputable/dist/redux/selectors';
-
-import { Header } from '../components';
-
-class Page extends React.Component {
-  constructor() {
-    super();
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  async handleSubmit(e) {
-    e.preventDefault();
-
-    const {
-      registryAddress,
-      participants,
-      submitApplication,
-    } = this.props;
-
-    const userAddress = participants.length ? participants[1].address : '';
-
-    const formData = new FormData(e.target);
-    const value = formData.get('university');
-
-    await submitApplication(registryAddress, value, userAddress, 100);
-    Router.push('/listings');
-  }
-
+class IndexPage extends React.Component {
   render() {
     return (
       <div>
-        <Header />
-        <h1>Enter the name of your university</h1>
+        <style jsx>
+          {`
+            .user-link {
+              display: block;
+            }
+          `}
+        </style>
 
-        <form onSubmit={this.handleSubmit}>
-          <input type="text" name="university" />
-          <button type="submit">
-            Add
-          </button>
-        </form>
+        <Link href="/listings/new">
+          <a className="user-link">
+            University Founder
+          </a>
+        </Link>
+
+        <Link href="/listings">
+          <a className="user-link">
+            Student
+          </a>
+        </Link>
+
+        <Link href="/">
+          <a className="user-link">
+            Reviewer
+          </a>
+        </Link>
       </div>
     );
   }
 }
 
-Page.propTypes = {
-  registryAddress: PropTypes.string,
-  participants: PropTypes.arrayOf(PropTypes.object),
-  submitApplication: PropTypes.func,
-};
-
-Page.defaultProps = {
-  registryAddress: '',
-  participants: [],
-  submitApplication: () => {},
-};
-
-const mapStateToProps = (state) => ({
-  registryAddress: getRegistryAddress(state),
-  participants: getParticipants(state),
-});
-
-const mapDispatchToProps = {
-  submitApplication: apply,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Page);
+export default IndexPage;
 
