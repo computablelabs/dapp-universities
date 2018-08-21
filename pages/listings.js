@@ -39,16 +39,14 @@ class Listings extends React.Component {
       <div>
         <style jsx>
           {`
-            .record-container {
+            table {
               max-width: 600px;
               margin: 0 auto;
             }
 
-            .record-header,
-            .record {
-              display: flex;
-              flex-direction: row;
-              justify-content: space-between;
+            td {
+              width: 100px;
+              text-align: center;
             }
           `}
         </style>
@@ -56,25 +54,29 @@ class Listings extends React.Component {
         <Header />
         <h1>Search Results</h1>
 
-        <div className="record-container">
-          <div className="record-header">
-            <div>RSID</div>
-            <div>Chromosome</div>
-            <div>Position</div>
-            <div>Genotype</div>
-          </div>
+        <table>
+          <thead>
+            <tr>
+              <th>RSID</th>
+              <th>Chromosome</th>
+              <th>Position</th>
+              <th>Genotype</th>
+            </tr>
+          </thead>
 
-          {
-            this.state.results.map((record, idx) => (
-              <div key={idx} className="record">
-                <div>{record.rsid}</div>
-                <div>{record.chromosome}</div>
-                <div>{record.position}</div>
-                <div>{record.genotype}</div>
-              </div>
-            ))
-          }
-        </div>
+          <tbody>
+            {
+              this.state.results.map((record, idx) => (
+                <tr key={idx}>
+                  <td>{record.rsid}</td>
+                  <td>{record.chromosome}</td>
+                  <td>{record.position}</td>
+                  <td>{record.genotype}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
       </div>
     );
   }
