@@ -27,7 +27,7 @@ class Page extends React.Component {
     const userAddress = participants.length ? participants[1].address : '';
 
     const formData = new FormData(e.target);
-    const value = formData.get('university');
+    const value = formData.get('value');
 
     await submitApplication(registryAddress, value, userAddress, 100);
     Router.push('/listings');
@@ -37,10 +37,10 @@ class Page extends React.Component {
     return (
       <div>
         <Header />
-        <h1>Enter the name of your university</h1>
+        <h1>Enter a search query</h1>
 
         <form onSubmit={this.handleSubmit}>
-          <input type="text" name="university" />
+          <input type="text" name="value" />
           <button type="submit">
             Add
           </button>
