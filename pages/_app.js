@@ -17,14 +17,14 @@ import { deployDll } from 'reputable/dist/redux/action-creators/dll';
 import { deployAttributeStore } from 'reputable/dist/redux/action-creators/attribute-store';
 import { deployVoting } from 'reputable/dist/redux/action-creators/voting';
 import { deployParameterizer } from 'reputable/dist/redux/action-creators/parameterizer';
-import { deployRegistry, apply } from 'reputable/dist/redux/action-creators/registry';
+import { deployRegistry } from 'reputable/dist/redux/action-creators/registry';
 
 // Local Imports
 import { initializeStore } from '../store';
 
 const { publicRuntimeConfig: config } = getConfig();
 
-const initializeBlockchain = async ({ dispatch, getState }) => {
+const initializeBlockchain = async ({ dispatch }) => {
   dispatch(setWebsocketAddress(config.ganacheUrl));
 
   /* ***
@@ -87,16 +87,6 @@ const initializeBlockchain = async ({ dispatch, getState }) => {
   // registry approval to spend on behalf of the challenger
   await dispatch(approve(registryAddress, 50 * 1000, voterAccount));
   await dispatch(approve(registryAddress, 50 * 1000, challengerAccount));
-
-  // voting approval for voter
-  // await dispatch(approve(votingAddress, 450 * 1000, { from: voterAccount }));
-
-  // apply listing to registry
-  await dispatch(apply(registryAddress, 'Deep Springs College', voterAccount, 100));
-  await dispatch(apply(registryAddress, 'Maharishi University', voterAccount, 100));
-  await dispatch(apply(registryAddress, 'Naropa University', voterAccount, 100));
-  await dispatch(apply(registryAddress, 'Bard College at Simon’s Rock', voterAccount, 100));
-  await dispatch(apply(registryAddress, 'Antioch College', voterAccount, 100));
 };
 
 class AppWrapper extends App {
