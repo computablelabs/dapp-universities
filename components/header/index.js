@@ -5,12 +5,22 @@ class Header extends React.Component {
   render() {
     return (
       <div>
-        <Link href="/">
-          <a>Add University</a>
-        </Link>
-        <Link href="/listings">
-          <a>View Universities</a>
-        </Link>
+        <style jsx>
+          {`
+            .container > a:not(:last-child) {
+              margin-right: 12px;
+            }
+          `}
+        </style>
+
+        <div className="container">
+          <Link href="/">
+            <a>Search</a>
+          </Link>
+          <Link href="/listings">
+            <a>Search Results</a>
+          </Link>
+        </div>
       </div>
     );
   }
