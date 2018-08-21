@@ -20,6 +20,9 @@ class Header extends React.Component {
           <Link href="/listings">
             <a>Search Results</a>
           </Link>
+          <Link href="/search-terms">
+            <a>Search Terms</a>
+          </Link>
         </div>
       </div>
     );
