@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Router from 'next/router';
 import { connect } from 'react-redux';
 
 import { apply } from 'reputable/dist/redux/action-creators/registry';
 import { getParticipants, getRegistryAddress } from 'reputable/dist/redux/selectors';
 
+import { Router } from '../routes';
 import { Header } from '../components';
 
 class Page extends React.Component {
@@ -30,7 +30,8 @@ class Page extends React.Component {
     const value = formData.get('value');
 
     await submitApplication(registryAddress, value, userAddress, 100);
-    Router.push('/listings');
+
+    Router.pushRoute('listings', { query: value });
   }
 
   render() {

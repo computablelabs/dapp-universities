@@ -1,47 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-
-import { getApplications } from 'reputable/dist/redux/selectors';
+import { withRouter } from 'next/router';
 
 import { Header } from '../components';
 
-const data = {
-  records: [
-    { rsid: '', chromosome: '1', position: '754105', genotype: 'CC' },
-    { rsid: '', chromosome: '1', position: '872952', genotype: 'CC' },
-    { rsid: '', chromosome: '1', position: '891277', genotype: 'CC' },
-    { rsid: '', chromosome: '1', position: '897564', genotype: 'CC' },
-    { rsid: '', chromosome: '1', position: '911101', genotype: 'CC' },
-    { rsid: '', chromosome: '1', position: '914749', genotype: 'CC' },
-    { rsid: '', chromosome: '1', position: '919419', genotype: 'CC' },
-    { rsid: '', chromosome: '1', position: '978804', genotype: 'CC' },
-    { rsid: '', chromosome: '1', position: '982968', genotype: 'CC' },
-    { rsid: '', chromosome: '1', position: '983243', genotype: 'CC' }
-  ],
-  queryExecution: {
-    QueryExecutionId: '5a12706d-4d05-4412-8c93-837d154b0e7c',
-    Query: 'select * from demo.genome where genotype=\'CC\' limit 10',
-    ResultConfiguration: {
-      OutputLocation: 's3://my-dna-prototype-data/5a12706d-4d05-4412-8c93-837d154b0e7c.csv'
-    },
-    QueryExecutionContext: { Database: 'default' },
-    Status: {
-      State: 'SUCCEEDED',
-      SubmissionDateTime: '2018-08-21T02:15:37.127Z',
-      CompletionDateTime: '2018-08-21T02:15:39.526Z'
-    },
-    Statistics: {
-      EngineExecutionTimeInMillis: 1982,
-      DataScannedInBytes: 4132823
-    }
-  }
-};
-
 class Listings extends React.Component {
-  render() {
-    // const { applications } = this.props;
+  constructor() {
+    super();
 
+    this.state = {
+      results: [],
+    };
+  }
+
+  componentDidMount() {
+    this.handleSearch();
+  }
+
+  async handleSearch() {
+    const term = this.props.router.query.query;
+
+    const response = await fetch(`/search/${term}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const responseJson = await response.json();
+
+    console.log('response: ', responseJson);
+
+    this.setState({ results: responseJson.response.records });
+  }
+
+  render() {
     return (
       <div>
         <style jsx>
@@ -72,7 +65,7 @@ class Listings extends React.Component {
           </div>
 
           {
-            data.records.map((record, idx) => (
+            this.state.results.map((record, idx) => (
               <div key={idx} className="record">
                 <div>{record.rsid}</div>
                 <div>{record.chromosome}</div>
@@ -87,19 +80,11 @@ class Listings extends React.Component {
   }
 }
 
+/* eslint-disable react/forbid-prop-types */
 Listings.propTypes = {
-  applications: PropTypes.arrayOf(PropTypes.object),
+  router: PropTypes.object.isRequired,
 };
+/* eslint-enable */
 
-Listings.defaultProps = {
-  applications: [],
-};
-
-const mapStateToProps = (state) => ({
-  applications: getApplications(state),
-});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Listings);
+export default withRouter(Listings);
 

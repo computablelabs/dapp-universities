@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+import { Link } from '../../routes';
 
 class Header extends React.Component {
   render() {
@@ -14,13 +14,13 @@ class Header extends React.Component {
         </style>
 
         <div className="container">
-          <Link href="/">
+          <Link href="/" prefetch>
             <a>Search</a>
           </Link>
-          <Link href="/listings">
+          <Link href="/listings" prefetch>
             <a>Search Results</a>
           </Link>
-          <Link href="/search-terms">
+          <Link href="/search-terms" prefetch>
             <a>Search Terms</a>
           </Link>
         </div>
