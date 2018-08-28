@@ -2,16 +2,15 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
-import Web3 from 'web3';
 
 // Next Dependencies
 import App, { Container } from 'next/app';
 import getConfig from 'next/config';
 
 // Reputable Dependencies
+import { getWeb3 } from 'reputable/dist/initializers';
 import { setWebsocketAddress } from 'reputable/dist/redux/action-creators/web3';
-import { participate } from 'reputable/dist/redux/action-creators/participant';
-
+import { participate } from 'reputable/dist/redux/action-creators/participants';
 import { deployToken, approve, transfer } from 'reputable/dist/redux/action-creators/token';
 import { deployDll } from 'reputable/dist/redux/action-creators/dll';
 import { deployAttributeStore } from 'reputable/dist/redux/action-creators/attribute-store';
@@ -24,9 +23,7 @@ import { initializeStore } from '../store';
 
 const { publicRuntimeConfig: config } = getConfig();
 
-const initializeBlockchain = async ({ dispatch, getState }) => {
-  dispatch(setWebsocketAddress(config.ganacheUrl));
-
+const initializeBlockchain = async ({ dispatch }) => {
   /* ***
    *
    * Application Dependencies (blockchain)
@@ -39,7 +36,8 @@ const initializeBlockchain = async ({ dispatch, getState }) => {
    *
    * *** */
 
-  const web3 = new Web3(new Web3.providers.WebsocketProvider(config.ganacheUrl));
+  await dispatch(setWebsocketAddress(config.ganacheUrl));
+  const web3 = await getWeb3(config.ganacheUrl);
   const accounts = await web3.eth.getAccounts();
   const ownerAccount = accounts[0];
   const challengerAccount = accounts[1];
@@ -52,51 +50,93 @@ const initializeBlockchain = async ({ dispatch, getState }) => {
   //   - which user addresses have been allocated
 
   // TODO(geoff) Guard: Is this user already a participant?
-  dispatch(participate('Mr Admin Pants IV', ownerAccount));
-  dispatch(participate('Voter', voterAccount));
-  dispatch(participate('Challenger', challengerAccount));
+  await dispatch(participate('Mr Admin Pants IV', ownerAccount));
+  await dispatch(participate('Voter', voterAccount));
+  await dispatch(participate('Challenger', challengerAccount));
 
   // deploy Token for User
-  const tokenAddress = await dispatch(deployToken(ownerAccount));
+  const tokenAddress = await dispatch(deployToken());
 
   // deploy DLL
-  const dllAddress = await dispatch(deployDll(ownerAccount));
+  const dllAddress = await dispatch(deployDll());
 
   // deploy Attribute Store
-  const attributeStoreAddress = await dispatch(deployAttributeStore(ownerAccount));
+  const attributeStoreAddress = await dispatch(deployAttributeStore());
 
   // deploy Voting Contract
-  const votingAddress = await dispatch(deployVoting(ownerAccount));
+  const votingAddress = await dispatch(deployVoting());
 
   // deploy Parameterizer
-  const parameterizerAddress = await dispatch(deployParameterizer(ownerAccount));
+  const parameterizerAddress = await dispatch(deployParameterizer());
 
   // deploy Registry
-  const registryAddress = await dispatch(deployRegistry('registry', ownerAccount));
+  const registryAddress = await dispatch(deployRegistry('registry'));
 
   // approve registry -- owner approves amount to spend
-  await dispatch(approve(registryAddress, 1 * 1000 * 1000, ownerAccount));
+  await dispatch(approve({
+    address: registryAddress,
+    amount: 1 * 1000 * 1000,
+    from: ownerAccount,
+  }));
 
   // approve voting -- owner approves amount to spend
-  await dispatch(approve(votingAddress, 1 * 1000 * 1000, ownerAccount));
+  await dispatch(approve({
+    address: votingAddress,
+    amount: 1 * 1000 * 1000,
+    from: ownerAccount,
+  }));
 
   // fund accounts
-  await dispatch(transfer(challengerAccount, 50 * 1000));
-  await dispatch(transfer(voterAccount, 50 * 1000));
+  await dispatch(transfer({
+    to: challengerAccount,
+    amount: 50 * 1000,
+  }));
+  await dispatch(transfer({
+    to: voterAccount,
+    amount: 50 * 1000,
+  }));
 
   // registry approval to spend on behalf of the challenger
-  await dispatch(approve(registryAddress, 50 * 1000, voterAccount));
-  await dispatch(approve(registryAddress, 50 * 1000, challengerAccount));
+  await dispatch(approve({
+    address: registryAddress,
+    amount: 50 * 1000,
+    from: voterAccount,
+  }));
+  await dispatch(approve({
+    address: registryAddress,
+    amount: 50 * 1000,
+    from: challengerAccount,
+  }));
 
   // voting approval for voter
   // await dispatch(approve(votingAddress, 450 * 1000, { from: voterAccount }));
 
   // apply listing to registry
-  await dispatch(apply(registryAddress, 'Deep Springs College', voterAccount, 100));
-  await dispatch(apply(registryAddress, 'Maharishi University', voterAccount, 100));
-  await dispatch(apply(registryAddress, 'Naropa University', voterAccount, 100));
-  await dispatch(apply(registryAddress, 'Bard College at Simon’s Rock', voterAccount, 100));
-  await dispatch(apply(registryAddress, 'Antioch College', voterAccount, 100));
+  await dispatch(apply({
+    listing: 'Deep Springs College',
+    userAddress: voterAccount,
+    deposit: 100,
+  }));
+  await dispatch(apply({
+    listing: 'Maharishi University',
+    userAddress: voterAccount,
+    deposit: 100,
+  }));
+  await dispatch(apply({
+    listing: 'Naropa University',
+    userAddress: voterAccount,
+    deposit: 100,
+  }));
+  await dispatch(apply({
+    listing: 'Bard College at Simon’s Rock',
+    userAddress: voterAccount,
+    deposit: 100,
+  }));
+  await dispatch(apply({
+    listing: 'Antioch College',
+    userAddress: voterAccount,
+    deposit: 100,
+  }));
 };
 
 class AppWrapper extends App {

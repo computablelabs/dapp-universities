@@ -5,13 +5,13 @@ import Container from './container';
 
 class Listings extends React.Component {
   render() {
-    const { applications } = this.props;
+    const { applicants } = this.props;
 
     return (
       <div>
         <h1>Listings</h1>
         {
-          applications.map((application, idx) => (
+          applicants.map((application, idx) => (
             <div key={idx}>{application.listing}</div>
           ))
         }
@@ -21,11 +21,11 @@ class Listings extends React.Component {
 }
 
 Listings.propTypes = {
-  applications: PropTypes.arrayOf(PropTypes.object),
+  applicants: PropTypes.arrayOf(PropTypes.object),
 };
 
 Listings.defaultProps = {
-  applications: [],
+  applicants: [],
 };
 
 export default Container(Listings);
