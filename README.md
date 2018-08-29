@@ -12,7 +12,9 @@ A decentralized application built for tutorial purposes.
 
 ### Install Application Dependencies
 
-- `git clone git@github.com:computablelabs/dapp-universities.git`
+- `git clone git@github.com:computablelabs/dapp-universities.git` 
+
+- `cd dapp-universities` 
 
 - `npm install`
 
