@@ -21,6 +21,7 @@ import { deployRegistry, apply } from 'reputable/dist/redux/action-creators/regi
 
 // Local Imports
 import { initializeStore } from '../store';
+import { IPFSWrite } from '../initializers/ipfs';
 
 const { publicRuntimeConfig: config } = getConfig();
 
@@ -120,7 +121,7 @@ const initializeBlockchain = async ({ dispatch }) => {
     listing: getListingHash(),
     userAddress: voterAccount,
     deposit: 100,
-    data: JSON.stringify({
+    data: await IPFSWrite({
       name: 'Deep Springs College',
       rank: getRank(),
     }),
@@ -129,7 +130,7 @@ const initializeBlockchain = async ({ dispatch }) => {
     listing: getListingHash(),
     userAddress: voterAccount,
     deposit: 100,
-    data: JSON.stringify({
+    data: await IPFSWrite({
       name: 'Maharishi University',
       rank: getRank(),
     }),
@@ -138,7 +139,7 @@ const initializeBlockchain = async ({ dispatch }) => {
     listing: getListingHash(),
     userAddress: voterAccount,
     deposit: 100,
-    data: JSON.stringify({
+    data: await IPFSWrite({
       name: 'Naropa University',
       rank: getRank(),
     }),
@@ -147,7 +148,7 @@ const initializeBlockchain = async ({ dispatch }) => {
     listing: getListingHash(),
     userAddress: voterAccount,
     deposit: 100,
-    data: JSON.stringify({
+    data: await IPFSWrite({
       name: 'Bard College at Simon’s Rock',
       rank: getRank(),
     }),
@@ -156,7 +157,7 @@ const initializeBlockchain = async ({ dispatch }) => {
     listing: getListingHash(),
     userAddress: voterAccount,
     deposit: 100,
-    data: JSON.stringify({
+    data: await IPFSWrite({
       name: 'Antioch College',
       rank: getRank(),
     }),
