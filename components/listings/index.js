@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Listing from './listing';
 import Container from './container';
 
 class Listings extends React.Component {
@@ -11,8 +12,8 @@ class Listings extends React.Component {
       <div>
         <h1>Listings</h1>
         {
-          applicants.map((application, idx) => (
-            <div key={idx}>{application.listing}</div>
+          applicants.map((applicant, idx) => (
+            <Listing key={idx} {...JSON.parse(applicant.data)} />
           ))
         }
       </div>
