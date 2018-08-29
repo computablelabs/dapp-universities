@@ -6,14 +6,39 @@ A decentralized application built for tutorial purposes.
 
 - npm
 - Ganache CLI: If you don't have Ganache CLI, do `npm install ganache-cli`
+- IPFS
 
 ## Getting started
+
+### Install Application Dependencies
 
 - `git clone git@github.com:computablelabs/dapp-universities.git`
 
 - `npm install`
 
-In a new terminal tab, do:
+### Install IPFS
+
+For alternative installation instructions, visit
+[IPFS](https://docs.ipfs.io/introduction/install/)
+
+This installation assumes you have [Homebrew](https://brew.sh) installed and
+available.
+
+In a new terminal tab, run:
+
+- `brew install ipfs`
+
+You can then manage IPFS via homebrew services
+
+- `brew services start ipfs`
+
+After installation is successful, run
+
+- `ipfs init`
+
+### Install Ganache
+
+In a new terminal tab, run:
 
 - `ganache-cli`
 
@@ -21,12 +46,15 @@ In a new terminal tab, do:
 
 In your dapp-university dir
 
-- Create a `.env` file. It should look like the `.env.example` file.
+- Run `cp ./.env.example ./.env`
 
-- Paste the ganache address into your `.env` file, replacing the example address.
+- In your `.env` file, paste the ganache address as the value of `GANACHE_URL`
 
-- Do `npm run dev`
+### Run the application
+
+- Run `npm run dev`
 
 Copy the localhost address into browser
 
 Enter your university name. You should now see it listed!!!
+
