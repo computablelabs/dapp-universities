@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import UUID from 'uuid/v4';
 
 import { apply } from 'reputable/dist/redux/action-creators/registry';
 import { getParticipants } from 'reputable/dist/redux/selectors';
+
+import { IPFS } from '../../../initializers';
 
 const mapStateToProps = (state) => ({
   participants: getParticipants(state),
@@ -20,16 +23,22 @@ const createContainer = (ComposedComponent) => {
       this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit({ name }) {
+    async handleSubmit({ name }) {
       const { dispatch, participants } = this.props;
 
-      const listing = name;
+      const data = { name };
+      const buffer = Buffer.from(JSON.stringify(data));
+      const ipfsBlock = await IPFS.block.put(buffer);
+
+      const listing = UUID().replace(/-/g, '');
       const userAddress = participants.length ? participants[1].address : '';
+      const cid = ipfsBlock.cid.toBaseEncodedString();
 
       dispatch(apply({
         listing,
         userAddress,
         deposit: 100,
+        data: cid,
       }));
     }
 

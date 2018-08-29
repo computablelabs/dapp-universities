@@ -3,11 +3,6 @@ import PropTypes from 'prop-types';
 
 import Container from './container';
 
-/*
- * TODO
- * - string 32 chars max
- */
-
 class ListingForm extends React.Component {
   constructor() {
     super();
