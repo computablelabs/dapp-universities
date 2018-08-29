@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Listing from './listing';
 import Container from './container';
 
 class Listings extends React.Component {
@@ -9,12 +10,43 @@ class Listings extends React.Component {
 
     return (
       <div>
+        <style jsx>
+          {`
+            table {
+              max-width: 600px;
+              margin: 0 auto;
+            }
+
+            th {
+              text-align: center;
+            }
+
+            th:first-child {
+              width: 250px;
+            }
+          `}
+        </style>
+
         <h1>Listings</h1>
-        {
-          applicants.map((application, idx) => (
-            <div key={idx}>{application.listing}</div>
-          ))
-        }
+
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Rank</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {
+              applicants.map((applicant, idx) => (
+                <tr key={idx}>
+                  <Listing key={idx} dataHash={applicant.data} />
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
       </div>
     );
   }

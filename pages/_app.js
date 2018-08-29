@@ -2,6 +2,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
+import UUID from 'uuid';
 
 // Next Dependencies
 import App, { Container } from 'next/app';
@@ -20,6 +21,7 @@ import { deployRegistry, apply } from 'reputable/dist/redux/action-creators/regi
 
 // Local Imports
 import { initializeStore } from '../store';
+import { IPFSWrite } from '../initializers/ipfs';
 
 const { publicRuntimeConfig: config } = getConfig();
 
@@ -112,30 +114,53 @@ const initializeBlockchain = async ({ dispatch }) => {
   // await dispatch(approve(votingAddress, 450 * 1000, { from: voterAccount }));
 
   // apply listing to registry
+  const getListingHash = () => UUID().replace(/-/g, '');
+  const getRank = () => Math.floor(Math.random() * 20);
+
   await dispatch(apply({
-    listing: 'Deep Springs College',
+    listing: getListingHash(),
     userAddress: voterAccount,
     deposit: 100,
+    data: await IPFSWrite({
+      name: 'Deep Springs College',
+      rank: getRank(),
+    }),
   }));
   await dispatch(apply({
-    listing: 'Maharishi University',
+    listing: getListingHash(),
     userAddress: voterAccount,
     deposit: 100,
+    data: await IPFSWrite({
+      name: 'Maharishi University',
+      rank: getRank(),
+    }),
   }));
   await dispatch(apply({
-    listing: 'Naropa University',
+    listing: getListingHash(),
     userAddress: voterAccount,
     deposit: 100,
+    data: await IPFSWrite({
+      name: 'Naropa University',
+      rank: getRank(),
+    }),
   }));
   await dispatch(apply({
-    listing: 'Bard College at Simon’s Rock',
+    listing: getListingHash(),
     userAddress: voterAccount,
     deposit: 100,
+    data: await IPFSWrite({
+      name: 'Bard College at Simon’s Rock',
+      rank: getRank(),
+    }),
   }));
   await dispatch(apply({
-    listing: 'Antioch College',
+    listing: getListingHash(),
     userAddress: voterAccount,
     deposit: 100,
+    data: await IPFSWrite({
+      name: 'Antioch College',
+      rank: getRank(),
+    }),
   }));
 };
 

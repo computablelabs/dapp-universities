@@ -7,7 +7,7 @@ import UUID from 'uuid/v4';
 import { apply } from 'reputable/dist/redux/action-creators/registry';
 import { getParticipants } from 'reputable/dist/redux/selectors';
 
-import { IPFS } from '../../../initializers';
+import { IPFSWrite } from '../../../initializers/ipfs';
 
 const mapStateToProps = (state) => ({
   participants: getParticipants(state),
@@ -27,12 +27,10 @@ const createContainer = (ComposedComponent) => {
       const { dispatch, participants } = this.props;
 
       const data = { name, rank };
-      const buffer = Buffer.from(JSON.stringify(data));
-      const ipfsBlock = await IPFS.block.put(buffer);
+      const cid = await IPFSWrite(data);
 
       const listing = UUID().replace(/-/g, '');
       const userAddress = participants.length ? participants[1].address : '';
-      const cid = ipfsBlock.cid.toBaseEncodedString();
 
       dispatch(apply({
         listing,
