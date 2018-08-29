@@ -23,23 +23,15 @@ class ListingForm extends React.Component {
 
     const {
       onBeforeSubmit,
+      onSubmit,
       onAfterSubmit,
-      participants,
-      submitApplication,
     } = this.props;
-
-    const userAddress = participants.length ? participants[1].address : '';
 
     const formData = new FormData(e.target);
     const name = formData.get('name');
 
     await onBeforeSubmit();
-    await submitApplication({
-      listing: name,
-      userAddress,
-      deposit: 100,
-      data: 'misc data',
-    });
+    await onSubmit({ name });
     await onAfterSubmit();
     this.clearFields();
   }
@@ -104,15 +96,13 @@ class ListingForm extends React.Component {
 ListingForm.propTypes = {
   onBeforeSubmit: PropTypes.func,
   onAfterSubmit: PropTypes.func,
-  participants: PropTypes.arrayOf(PropTypes.object),
-  submitApplication: PropTypes.func,
+  onSubmit: PropTypes.func,
 };
 
 ListingForm.defaultProps = {
   onBeforeSubmit: () => {},
   onAfterSubmit: () => {},
-  participants: [],
-  submitApplication: () => {},
+  onSubmit: () => {},
 };
 
 export default Container(ListingForm);
