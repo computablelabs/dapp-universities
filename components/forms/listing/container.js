@@ -23,10 +23,10 @@ const createContainer = (ComposedComponent) => {
       this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    async handleSubmit({ name }) {
+    async handleSubmit({ name, rank }) {
       const { dispatch, participants } = this.props;
 
-      const data = { name };
+      const data = { name, rank };
       const buffer = Buffer.from(JSON.stringify(data));
       const ipfsBlock = await IPFS.block.put(buffer);
 

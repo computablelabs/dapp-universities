@@ -8,6 +8,7 @@ class ListingForm extends React.Component {
     super();
 
     this.refName = React.createRef();
+    this.refRank = React.createRef();
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.clearFields = this.clearFields.bind(this);
@@ -24,15 +25,17 @@ class ListingForm extends React.Component {
 
     const formData = new FormData(e.target);
     const name = formData.get('name');
+    const rank = formData.get('rank');
 
     await onBeforeSubmit();
-    await onSubmit({ name });
+    await onSubmit({ name, rank });
     await onAfterSubmit();
     this.clearFields();
   }
 
   clearFields() {
     this.refName.current.value = '';
+    this.refRank.current.value = '';
   }
 
   render() {
@@ -76,6 +79,19 @@ class ListingForm extends React.Component {
                 />
               </label>
             </div>
+
+            <div>
+              <label htmlFor="rank">
+                <div>University Rank</div>
+                <input
+                  ref={this.refRank}
+                  type="text"
+                  id="rank"
+                  name="rank"
+                />
+              </label>
+            </div>
+          </div>
 
           <div className="cta-container">
             <button type="submit">
