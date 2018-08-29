@@ -1,7 +1,7 @@
 import React from 'react';
 import Router from 'next/router';
 
-import { ListingForm } from '../../components';
+import { Header, ListingForm } from '../../components';
 
 class ListingsPage extends React.Component {
   constructor() {
@@ -17,6 +17,7 @@ class ListingsPage extends React.Component {
   render() {
     return (
       <div>
+        <Header />
         <ListingForm afterSubmit={this.onAfterSubmit} />
       </div>
     );

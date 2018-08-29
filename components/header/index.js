@@ -6,10 +6,7 @@ class Header extends React.Component {
     return (
       <div>
         <Link href="/">
-          <a>Add University</a>
-        </Link>
-        <Link href="/listings">
-          <a>View Universities</a>
+          <a>Home</a>
         </Link>
       </div>
     );

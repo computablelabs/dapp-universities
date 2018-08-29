@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { getApplications } from 'reputable/dist/redux/selectors';
+import { getApplicants } from 'reputable/dist/redux/selectors';
 
 const mapStateToProps = (state) => ({
-  applications: getApplications(state),
+  applicants: getApplicants(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
