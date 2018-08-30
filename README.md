@@ -12,9 +12,9 @@ A decentralized application built for tutorial purposes.
 
 ### Install Application Dependencies
 
-- `git clone git@github.com:computablelabs/dapp-universities.git` 
+- `git clone git@github.com:computablelabs/dapp-universities.git`
 
-- `cd dapp-universities` 
+- `cd dapp-universities`
 
 - `npm install`
 
@@ -37,6 +37,11 @@ You can then manage IPFS via homebrew services
 After installation is successful, run
 
 - `ipfs init`
+
+Configure IPFS config to allow CORS requests by running
+
+- `ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'`
+- `ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'`
 
 ### Install Ganache
 
