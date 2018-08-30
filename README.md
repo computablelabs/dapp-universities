@@ -43,7 +43,7 @@ Configure IPFS config to allow CORS requests by running
 - `ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'`
 - `ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'`
 
-Start the IPFS Daemon in a new terminal
+For non mac-OS installations, you will need to start the IPFS Daemon manually in a new terminal: 
 
 - ipfs daemon
 
