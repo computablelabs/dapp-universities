@@ -4,10 +4,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import UUID from 'uuid/v4';
 
+import { DataSources } from 'reputable/dist/constants';
 import { apply } from 'reputable/dist/redux/action-creators/registry';
 import { getParticipants } from 'reputable/dist/redux/selectors';
-
-import { IPFSWrite } from '../../../initializers/ipfs';
 
 const mapStateToProps = (state) => ({
   participants: getParticipants(state),
@@ -26,17 +25,18 @@ const createContainer = (ComposedComponent) => {
     async handleSubmit({ name, rank }) {
       const { dispatch, participants } = this.props;
 
-      const data = { name, rank };
-      const cid = await IPFSWrite(data);
-
       const listing = UUID().replace(/-/g, '');
       const userAddress = participants.length ? participants[1].address : '';
+      const data = {
+        source: DataSources.IPFS,
+        value: { name, rank },
+      };
 
       dispatch(apply({
         listing,
         userAddress,
         deposit: 100,
-        data: cid,
+        data,
       }));
     }
 
