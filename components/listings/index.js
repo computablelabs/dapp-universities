@@ -41,7 +41,7 @@ class Listings extends React.Component {
             {
               applicants.map((applicant, idx) => (
                 <tr key={idx}>
-                  <Listing key={idx} dataHash={applicant.data} />
+                  <Listing key={idx} {...applicant.data.value} />
                 </tr>
               ))
             }
