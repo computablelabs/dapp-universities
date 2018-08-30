@@ -9,6 +9,7 @@ import App, { Container } from 'next/app';
 import getConfig from 'next/config';
 
 // Reputable Dependencies
+import { DataSources } from 'reputable/dist/constants';
 import { getWeb3 } from 'reputable/dist/initializers';
 import { setWebsocketAddress } from 'reputable/dist/redux/action-creators/web3';
 import { participate } from 'reputable/dist/redux/action-creators/participants';
@@ -21,7 +22,6 @@ import { deployRegistry, apply } from 'reputable/dist/redux/action-creators/regi
 
 // Local Imports
 import { initializeStore } from '../store';
-import { IPFSWrite } from '../initializers/ipfs';
 
 const { publicRuntimeConfig: config } = getConfig();
 
@@ -121,46 +121,61 @@ const initializeBlockchain = async ({ dispatch }) => {
     listing: getListingHash(),
     userAddress: voterAccount,
     deposit: 100,
-    data: await IPFSWrite({
-      name: 'Deep Springs College',
-      rank: getRank(),
-    }),
+    data: {
+      source: DataSources.IPFS,
+      value: {
+        name: 'Deep Springs College',
+        rank: getRank(),
+      },
+    },
   }));
   await dispatch(apply({
     listing: getListingHash(),
     userAddress: voterAccount,
     deposit: 100,
-    data: await IPFSWrite({
-      name: 'Maharishi University',
-      rank: getRank(),
-    }),
+    data: {
+      source: DataSources.IPFS,
+      value: {
+        name: 'Maharishi University',
+        rank: getRank(),
+      },
+    },
   }));
   await dispatch(apply({
     listing: getListingHash(),
     userAddress: voterAccount,
     deposit: 100,
-    data: await IPFSWrite({
-      name: 'Naropa University',
-      rank: getRank(),
-    }),
+    data: {
+      source: DataSources.IPFS,
+      value: {
+        name: 'Naropa University',
+        rank: getRank(),
+      },
+    },
   }));
   await dispatch(apply({
     listing: getListingHash(),
     userAddress: voterAccount,
     deposit: 100,
-    data: await IPFSWrite({
-      name: 'Bard College at Simon’s Rock',
-      rank: getRank(),
-    }),
+    data: {
+      source: DataSources.IPFS,
+      value: {
+        name: 'Bard College at Simon’s Rock',
+        rank: getRank(),
+      },
+    },
   }));
   await dispatch(apply({
     listing: getListingHash(),
     userAddress: voterAccount,
     deposit: 100,
-    data: await IPFSWrite({
-      name: 'Antioch College',
-      rank: getRank(),
-    }),
+    data: {
+      source: DataSources.IPFS,
+      value: {
+        name: 'Antioch College',
+        rank: getRank(),
+      },
+    },
   }));
 };
 
