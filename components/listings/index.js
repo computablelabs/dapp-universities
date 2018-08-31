@@ -27,8 +27,6 @@ class Listings extends React.Component {
           `}
         </style>
 
-        <h1>Listings</h1>
-
         <table>
           <thead>
             <tr>
