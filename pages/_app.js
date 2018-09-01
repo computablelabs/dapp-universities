@@ -6,7 +6,6 @@ import UUID from 'uuid';
 
 // Next Dependencies
 import App, { Container } from 'next/app';
-import getConfig from 'next/config';
 
 // Reputable Dependencies
 import { DataSources } from 'reputable/dist/constants';
@@ -23,8 +22,6 @@ import { deployRegistry, apply } from 'reputable/dist/redux/action-creators/regi
 // Local Imports
 import { initializeStore } from '../store';
 
-const { publicRuntimeConfig: config } = getConfig();
-
 const initializeBlockchain = async ({ dispatch }) => {
   /* ***
    *
@@ -38,8 +35,8 @@ const initializeBlockchain = async ({ dispatch }) => {
    *
    * *** */
 
-  await dispatch(setWebsocketAddress(config.ganacheUrl));
-  const web3 = await getWeb3(config.ganacheUrl);
+  await dispatch(setWebsocketAddress(process.env.GANACHE_URL));
+  const web3 = await getWeb3(process.env.GANACHE_URL);
   const accounts = await web3.eth.getAccounts();
   const ownerAccount = accounts[0];
   const challengerAccount = accounts[1];
