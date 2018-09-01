@@ -1,18 +1,23 @@
 require('dotenv').config();
 
-module.exports = {
-  // Server Only
-  serverRuntimeConfig: {
+const path = require('path');
+const Dotenv = require('dotenv-webpack');
 
-  },
-  // Client + Server
-  publicRuntimeConfig: {
-    ganacheUrl: process.env.GANACHE_URL,
-    ipfs: {
-      domain: process.env.IPFS_DOMAIN,
-      port: process.env.IPFS_PORT,
-      protocol: process.env.IPFS_PROTOCOL,
-    },
+module.exports = {
+  webpack: (config) => {
+    config.plugins = config.plugins || [];
+
+    config.plugins = [
+      ...config.plugins,
+
+      // Read the .env file
+      new Dotenv({
+        path: path.join(__dirname, '.env'),
+        systemvars: true,
+      }),
+    ];
+
+    return config;
   },
 };
 
