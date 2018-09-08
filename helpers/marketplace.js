@@ -60,13 +60,13 @@ const initializeDataMarketplace = async (dispatch) => {
   await dispatch(participate('Challenger', challengerAccount));
 
   // deploy Token for User
-  const tokenAddress = await dispatch(deployToken());
+  await dispatch(deployToken());
 
   // deploy DLL
-  const dllAddress = await dispatch(deployDll());
+  await dispatch(deployDll());
 
   // deploy Attribute Store
-  const attributeStoreAddress = await dispatch(deployAttributeStore());
+  await dispatch(deployAttributeStore());
 
   // deploy Voting Contract
   const votingAddress = await dispatch(deployVoting());
