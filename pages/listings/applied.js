@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { Header, Listings } from '../../components';
+import { Header, AppliedListings } from '../../components';
 
 const LIMIT = 5;
 
-class NewListingPage extends React.Component {
+class AppliedListingsPage extends React.Component {
   constructor() {
     super();
 
@@ -36,17 +36,17 @@ class NewListingPage extends React.Component {
         </style>
 
         <Header />
-        <h1>Listings</h1>
+        <h1>Applied Listings</h1>
 
         <button className="btn-limit" onClick={this.handleLimitChange}>
           { this.state.limit ? 'All' : `Top ${LIMIT}` }
         </button>
 
-        <Listings sortBy="rank" limit={this.state.limit} />
+        <AppliedListings sortBy="rank" limit={this.state.limit} />
       </div>
     );
   }
 }
 
-export default NewListingPage;
+export default AppliedListingsPage;
 
