@@ -61,13 +61,16 @@ const createContainer = (ComposedComponent) => {
     }
 
     async handleChallengeListing(listingHash) {
-      const { dispatch, participants } = this.props;
+      const { dispatch, participants, listings } = this.props;
 
       const challenger = participants[2];
 
       await dispatch(
         challengeListing({ listingHash, challenger: challenger.address })
       );
+
+      const listing = listings.find((item) => item.listingHash === listingHash);
+      console.demo('Challenged listing: ', listing.data.value.name);
     }
 
     render() {
