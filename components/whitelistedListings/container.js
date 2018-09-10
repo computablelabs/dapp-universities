@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { getApplicants } from 'reputable/dist/redux/selectors';
+import { getWhitelistedListings } from 'reputable/dist/redux/selectors';
 
 const mapStateToProps = (state, props) => {
-  let applicants = getApplicants(state);
+  let listings = getWhitelistedListings(state);
 
   if (props.sortBy) {
     const sort = (a, b) => {
@@ -24,17 +24,19 @@ const mapStateToProps = (state, props) => {
       return 0;
     };
 
-    applicants = applicants.sort(sort);
+    listings = listings.sort(sort);
   }
 
   if (props.limit) {
-    applicants = applicants.slice(0, props.limit);
+    listings = listings.slice(0, props.limit);
   }
 
-  return { applicants };
+  return { listings };
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = (dispatch) => (
+  bindActionCreators({}, dispatch)
+);
 
 const createContainer = (ComposedComponent) => {
   class Container extends React.Component {

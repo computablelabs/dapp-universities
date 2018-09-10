@@ -3,7 +3,7 @@ import Router from 'next/router';
 
 import { Header, ListingForm } from '../../components';
 
-class ListingsPage extends React.Component {
+class NewListingsPage extends React.Component {
   constructor() {
     super();
 
@@ -24,5 +24,5 @@ class ListingsPage extends React.Component {
   }
 }
 
-export default ListingsPage;
+export default NewListingsPage;
 

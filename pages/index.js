@@ -15,19 +15,19 @@ class IndexPage extends React.Component {
 
         <Link href="/listings/new">
           <a className="user-link">
-            University Founder
+            University Founder (Apply)
           </a>
         </Link>
 
-        <Link href="/listings">
+        <Link href="/listings/whitelisted">
           <a className="user-link">
-            Student
+            Student (View Listings)
           </a>
         </Link>
 
-        <Link href="/">
+        <Link href="/listings/applied">
           <a className="user-link">
-            Reviewer
+            Reviewer (View/Challenge Applicants)
           </a>
         </Link>
       </div>

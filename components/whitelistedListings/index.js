@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import Listing from './listing';
 import Container from './container';
 
-class Listings extends React.Component {
+class WhitelistedListings extends React.Component {
   render() {
-    const { applicants } = this.props;
+    const { listings } = this.props;
 
     return (
       <div>
@@ -37,9 +37,9 @@ class Listings extends React.Component {
 
           <tbody>
             {
-              applicants.map((applicant, idx) => (
+              listings.map((listing, idx) => (
                 <tr key={idx}>
-                  <Listing key={idx} {...applicant.data.value} />
+                  <Listing key={idx} {...listing.data.value} />
                 </tr>
               ))
             }
@@ -50,13 +50,13 @@ class Listings extends React.Component {
   }
 }
 
-Listings.propTypes = {
-  applicants: PropTypes.arrayOf(PropTypes.object),
+WhitelistedListings.propTypes = {
+  listings: PropTypes.arrayOf(PropTypes.object),
 };
 
-Listings.defaultProps = {
-  applicants: [],
+WhitelistedListings.defaultProps = {
+  listings: [],
 };
 
-export default Container(Listings);
+export default Container(WhitelistedListings);
 

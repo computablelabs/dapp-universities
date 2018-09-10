@@ -5,14 +5,16 @@ import { bindActionCreators } from 'redux';
 import UUID from 'uuid/v4';
 
 import { DataSources } from 'reputable/dist/constants';
-import { apply } from 'reputable/dist/redux/action-creators/registry';
+import { applyListing } from 'reputable/dist/redux/action-creators/registry';
 import { getParticipants } from 'reputable/dist/redux/selectors';
 
 const mapStateToProps = (state) => ({
   participants: getParticipants(state),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = (dispatch) => (
+  bindActionCreators({}, dispatch)
+);
 
 const createContainer = (ComposedComponent) => {
   class Container extends React.Component {
@@ -32,12 +34,14 @@ const createContainer = (ComposedComponent) => {
         value: { name, rank },
       };
 
-      dispatch(apply({
-        listing,
-        userAddress,
-        deposit: 100,
-        data,
-      }));
+      await dispatch(
+        applyListing({
+          listing,
+          userAddress,
+          deposit: 100,
+          data,
+        })
+      );
     }
 
     render() {
