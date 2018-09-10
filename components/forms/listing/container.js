@@ -42,6 +42,8 @@ const createContainer = (ComposedComponent) => {
           data,
         })
       );
+
+      console.demo('Applied listing for: ', name);
     }
 
     render() {
