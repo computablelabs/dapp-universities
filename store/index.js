@@ -9,6 +9,8 @@ import {
 
 import rootReducer from 'reputable/dist/redux/reducers/root';
 
+let store
+
 const composedMiddleware = [
   applyMiddleware(thunk),
 ];
@@ -42,11 +44,13 @@ const initializeStore = (initialState, options) => {
 
   const composedEnhancers = compose(...composedMiddleware);
 
-  return createStore(
+  store = createStore(
     rootReducer,
     composedEnhancers,
     // initialState,
   );
+
+  return store;
 };
 
 /*
@@ -58,6 +62,7 @@ const initializeStore = (initialState = {}) =>
 
 export {
   initializeStore,
+  store,
   // persistor,
 };
 
