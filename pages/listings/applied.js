@@ -39,7 +39,7 @@ class AppliedListingsPage extends React.Component {
         <h1>Applied Listings</h1>
 
         <button className="btn-limit" onClick={this.handleLimitChange}>
-          { this.state.limit ? 'All' : `Top ${LIMIT}` }
+          { this.state.limit ? `Top ${LIMIT}` : 'All' }
         </button>
 
         <AppliedListings sortBy="rank" limit={this.state.limit} />

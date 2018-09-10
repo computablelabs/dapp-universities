@@ -37,14 +37,11 @@ class AppliedListings extends React.Component {
           `}
         </style>
 
-        <h3>{this.renderCurrentDateTime()}</h3>
-
         <table>
           <thead>
             <tr>
               <th>Name</th>
               <th>Rank</th>
-              <th>Applicant Expiration Time</th>
               <th />
             </tr>
           </thead>

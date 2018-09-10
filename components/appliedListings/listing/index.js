@@ -21,13 +21,6 @@ class Listing extends React.Component {
     onChallengeListing(listingHash);
   }
 
-  formatDateTime(epoch) {
-    const date = new Date(0);
-    date.setUTCSeconds(epoch);
-
-    return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
-  }
-
   render() {
     const {
       name,
@@ -57,9 +50,6 @@ class Listing extends React.Component {
 
         <td className="align-left">{name}</td>
         <td className="align-right">{rank}</td>
-        <td className="align-right">
-          {this.formatDateTime(applicationExpiry)} | {applicationExpiry}
-        </td>
         <td className="align-center">
           <button
             onClick={canChallenge ?
@@ -67,7 +57,7 @@ class Listing extends React.Component {
               this.handleUpdateListingStatus
             }
           >
-            { canChallenge ? 'Challenge' : 'Update State' }
+            { canChallenge ? 'Challenge' : 'Update Status' }
           </button>
         </td>
       </React.Fragment>
