@@ -29,6 +29,8 @@ const SeedUniversities = [
 ];
 
 const initializeDataMarketplace = async (dispatch) => {
+  console.demo('Initializing data marketplace');
+
   /* ***
    *
    * Application Dependencies (blockchain)
@@ -56,30 +58,39 @@ const initializeDataMarketplace = async (dispatch) => {
 
   // TODO(geoff) Guard: Is this user already a participant?
   await dispatch(participate('Mr Admin Pants IV', ownerAccount));
+  console.demo('Added admin participant: ', ownerAccount);
   await dispatch(participate('Voter', voterAccount));
+  // console.demo('added participant voter: ', voterAccount);
   await dispatch(participate('Challenger', challengerAccount));
+  console.demo('Added challenger participant: ', challengerAccount);
 
   // deploy Token for User
-  await dispatch(deployToken());
+  const tokenAddress = await dispatch(deployToken());
+  console.demo('Deployed Token Contract: ', tokenAddress);
 
   // deploy DLL
-  await dispatch(deployDll());
+  const dllAddress = await dispatch(deployDll());
+  console.demo('Deployed DLL Contract: ', dllAddress);
 
   // deploy Attribute Store
-  await dispatch(deployAttributeStore());
+  const attributeStoreAddress = await dispatch(deployAttributeStore());
+  console.demo('Deployed Attribute Store Contract: ', attributeStoreAddress);
 
   // deploy Voting Contract
   const votingAddress = await dispatch(deployVoting());
+  console.demo('Deployed Voting Contract: ', votingAddress);
 
   // deploy Parameterizer
-  await dispatch(deployParameterizer({
+  const parameterizerAddress = await dispatch(deployParameterizer({
     applyStageLen: APPLY_STAGE_LENGTH,
     commitStageLen: COMMIT_STAGE_LENGTH,
     revealStageLen: REVEAL_STAGE_LENGTH,
   }));
+  console.demo('Deployed Paramterizer Contract: ', parameterizerAddress);
 
   // deploy Registry
   const registryAddress = await dispatch(deployRegistry('registry'));
+  console.demo('Deployed Registry Contract: ', registryAddress);
 
   // approve registry -- owner approves amount to spend
   await dispatch(approve({
@@ -87,6 +98,7 @@ const initializeDataMarketplace = async (dispatch) => {
     amount: 1 * 1000 * 1000,
     from: ownerAccount,
   }));
+  console.demo('Approved Registry Contract to spend tokens on behalf of the Owner');
 
   // approve voting -- owner approves amount to spend
   await dispatch(approve({
@@ -94,16 +106,19 @@ const initializeDataMarketplace = async (dispatch) => {
     amount: 1 * 1000 * 1000,
     from: ownerAccount,
   }));
+  console.demo('Approved Voting Contract to spend tokens on behalf of the Owner');
 
   // fund accounts
   await dispatch(transfer({
     to: challengerAccount,
     amount: 50 * 1000,
   }));
+  console.demo('Funded the Challenger account');
   await dispatch(transfer({
     to: voterAccount,
     amount: 50 * 1000,
   }));
+  // console.demo('Funded the Voter account');
 
   // registry approval to spend on behalf of the challenger
   await dispatch(approve({
@@ -111,11 +126,13 @@ const initializeDataMarketplace = async (dispatch) => {
     amount: 50 * 1000,
     from: voterAccount,
   }));
+  // console.demo('Approved the Registry Contract to spend tokens on behalf of the Voter');
   await dispatch(approve({
     address: registryAddress,
     amount: 50 * 1000,
     from: challengerAccount,
   }));
+  console.demo('Approved the Registry Contract to spend tokens on behalf of the Challenger');
 
   // voting approval for voter
   // await dispatch(approve(votingAddress, 450 * 1000, { from: voterAccount }));
@@ -139,6 +156,8 @@ const initializeDataMarketplace = async (dispatch) => {
         },
       })
     );
+
+    console.demo('Applied listing for: ', universityName);
   });
 };
 

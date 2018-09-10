@@ -53,21 +53,35 @@ const createContainer = (ComposedComponent) => {
     }
 
     async handleUpdateListingStatus(listingHash) {
-      const { dispatch } = this.props;
+      const { dispatch, listings } = this.props;
 
-      dispatch(
+      const listing = listings.find((item) => item.listingHash === listingHash);
+      const { name } = listing.data.value;
+
+      const response = await dispatch(
         updateListingStatus(listingHash)
       );
+
+      console.demo('Updated listing status: ', name);
+
+      if (response.whitelisted) {
+        console.demo('Whitelisted: ', name);
+      } else {
+        console.demo('Removed: ', name);
+      }
     }
 
     async handleChallengeListing(listingHash) {
-      const { dispatch, participants } = this.props;
+      const { dispatch, participants, listings } = this.props;
 
       const challenger = participants[2];
 
       await dispatch(
         challengeListing({ listingHash, challenger: challenger.address })
       );
+
+      const listing = listings.find((item) => item.listingHash === listingHash);
+      console.demo('Challenged listing: ', listing.data.value.name);
     }
 
     render() {

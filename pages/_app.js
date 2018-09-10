@@ -7,6 +7,7 @@ import withRedux from 'next-redux-wrapper';
 import App, { Container } from 'next/app';
 
 // Local Imports
+import '../helpers/logging';
 import { initializeStore } from '../store';
 import { initializeDataMarketplace } from '../helpers';
 
