@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import UUID from 'uuid/v4';
 
-import { DataSources } from 'reputable/dist/constants';
+// import { DataSources } from 'reputable/dist/constants';
 import { applyListing } from 'reputable/dist/redux/action-creators/registry';
 import { getParticipants } from 'reputable/dist/redux/selectors';
 
@@ -30,7 +30,7 @@ const createContainer = (ComposedComponent) => {
       const listing = UUID().replace(/-/g, '');
       const userAddress = participants.length ? participants[1].address : '';
       const data = {
-        source: DataSources.IPFS,
+        // source: DataSources.IPFS,
         value: { name, rank },
       };
 

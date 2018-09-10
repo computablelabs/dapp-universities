@@ -148,7 +148,7 @@ const initializeDataMarketplace = async (dispatch) => {
         userAddress: voterAccount,
         deposit: 100,
         data: {
-          source: DataSources.IPFS,
+          // source: DataSources.IPFS,
           value: {
             name: universityName,
             rank: getRank(),
