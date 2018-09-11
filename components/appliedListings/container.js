@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Router from 'next/router';
 
 // Reputable Dependencies
 import { updateListingStatus, challengeListing } from 'reputable/dist/redux/action-creators/registry';
@@ -82,6 +83,8 @@ const createContainer = (ComposedComponent) => {
 
       const listing = listings.find((item) => item.listingHash === listingHash);
       console.demo('Challenged listing: ', listing.data.value.name);
+
+      Router.push('/listings/whitelisted');
     }
 
     render() {
