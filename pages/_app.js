@@ -9,12 +9,13 @@ import App, { Container } from 'next/app';
 // Local Imports
 import '../helpers/logging';
 import { initializeStore } from '../store';
-import { initializeDataMarketplace } from '../helpers';
+import {
+  initializeDataMarketplace,
+  initializeListingStatusPolling,
+} from '../helpers';
 
 class AppWrapper extends App {
-  constructor(props) {
-    super(props);
-
+  componentDidMount() {
     this.initialize();
   }
 
@@ -22,6 +23,10 @@ class AppWrapper extends App {
     const { store } = this.props;
 
     await initializeDataMarketplace(store.dispatch);
+    initializeListingStatusPolling({
+      dispatch: store.dispatch,
+      getState: store.getState,
+    });
   }
 
   render() {
