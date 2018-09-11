@@ -11,14 +11,14 @@ class NewListingsPage extends React.Component {
   }
 
   handleAfterSubmit() {
-    Router.push('/listings');
+    Router.push('/listings/applied');
   }
 
   render() {
     return (
       <div>
         <Header />
-        <ListingForm afterSubmit={this.onAfterSubmit} />
+        <ListingForm onAfterSubmit={this.handleAfterSubmit} />
       </div>
     );
   }
