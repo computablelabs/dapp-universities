@@ -24,7 +24,7 @@
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
-    "reputable": "github:computablelabs/reputable",
+    "reputable": "github:computablelabs/reputable#3e92dc72180ef47a1765300a82c20573228b2bb2",
     "uuid": "^3.3.2",
     "web3": "^1.0.0-beta.34"
   },
