@@ -63,11 +63,13 @@ const createContainer = (ComposedComponent) => {
         updateListingStatus(listingHash)
       );
 
-      console.demo('Updated listing status: ', name);
+      if (response) {
+        console.demo('Updated listing status: ', name);
+      }
 
-      if (response.whitelisted) {
+      if (response && response.whitelisted) {
         console.demo('Whitelisted: ', name);
-      } else {
+      } else if (response) {
         console.demo('Removed: ', name);
       }
     }
