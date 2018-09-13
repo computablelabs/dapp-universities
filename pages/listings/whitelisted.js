@@ -36,7 +36,7 @@ class WhitelistedListingsPage extends React.Component {
         </style>
 
         <Header />
-        <h1>Listings</h1>
+        <h1>Whitelisted Listings</h1>
 
         <button className="btn-limit" onClick={this.handleLimitChange}>
           { this.state.limit ? 'All' : `Top ${LIMIT}` }
