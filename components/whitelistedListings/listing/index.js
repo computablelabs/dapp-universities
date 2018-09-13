@@ -28,7 +28,10 @@ class Listing extends React.Component {
 
 Listing.propTypes = {
   name: PropTypes.string.isRequired,
-  rank: PropTypes.number.isRequired,
+  rank: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
 };
 
 export default Listing;

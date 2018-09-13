@@ -68,7 +68,10 @@ class Listing extends React.Component {
 Listing.propTypes = {
   listingHash: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  rank: PropTypes.number.isRequired,
+  rank: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
   applicationExpiry: PropTypes.string.isRequired,
   onUpdateListingStatus: PropTypes.func,
   onChallengeListing: PropTypes.func,
