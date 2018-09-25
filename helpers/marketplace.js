@@ -2,16 +2,29 @@
 import UUID from 'uuid';
 
 // Reputable Dependencies
-import { DataSources } from 'reputable/dist/constants';
-import { getWeb3 } from 'reputable/dist/initializers';
-import { setWebsocketAddress } from 'reputable/dist/redux/action-creators/web3';
-import { participate } from 'reputable/dist/redux/action-creators/participants';
-import { deployToken, approve, transfer } from 'reputable/dist/redux/action-creators/token';
-import { deployDll } from 'reputable/dist/redux/action-creators/dll';
-import { deployAttributeStore } from 'reputable/dist/redux/action-creators/attribute-store';
-import { deployVoting } from 'reputable/dist/redux/action-creators/voting';
-import { deployParameterizer } from 'reputable/dist/redux/action-creators/parameterizer';
-import { deployRegistry, applyListing } from 'reputable/dist/redux/action-creators/registry';
+import { getWeb3 } from '@computable/reputable/dist/initializers';
+import ContractObserver from '@computable/reputable/dist/redux/observer';
+import {
+  setWebsocketAddress,
+  deployToken,
+  deployDll,
+  deployAttributeStore,
+  deployVoting,
+  deployParameterizer,
+  deployRegistry,
+  addParticipant,
+  applyListing,
+  approve,
+  transfer,
+} from '@computable/reputable/dist/redux/action-creators';
+import {
+  getTokenAddress,
+  getDllAddress,
+  getAttributeStoreAddress,
+  getVotingAddress,
+  getParameterizerAddress,
+  getRegistryAddress,
+} from '@computable/reputable/dist/redux/selectors';
 
 // Local Dependencies
 import {
@@ -28,7 +41,9 @@ const SeedUniversities = [
   'Antioch College',
 ];
 
-const initializeDataMarketplace = async (dispatch) => {
+const initializeDataMarketplace = async (dispatch, getState) => {
+  let state;
+
   console.demo('Initializing data marketplace');
 
   /* ***
@@ -57,40 +72,55 @@ const initializeDataMarketplace = async (dispatch) => {
   //   - which user addresses have been allocated
 
   // TODO(geoff) Guard: Is this user already a participant?
-  await dispatch(participate('Mr Admin Pants IV', ownerAccount));
+  await dispatch(addParticipant('Mr Admin Pants IV', ownerAccount));
   console.demo('Added admin participant: ', ownerAccount);
-  await dispatch(participate('Voter', voterAccount));
+  await dispatch(addParticipant('Voter', voterAccount));
   // console.demo('added participant voter: ', voterAccount);
-  await dispatch(participate('Challenger', challengerAccount));
+  await dispatch(addParticipant('Challenger', challengerAccount));
   console.demo('Added challenger participant: ', challengerAccount);
 
   // deploy Token for User
-  const tokenAddress = await dispatch(deployToken());
+  await dispatch(deployToken());
+  state = getState();
+  const tokenAddress = getTokenAddress(state);
   console.demo('Deployed Token Contract: ', tokenAddress);
 
   // deploy DLL
-  const dllAddress = await dispatch(deployDll());
+  await dispatch(deployDll());
+  state = getState();
+  const dllAddress = getDllAddress(state);
   console.demo('Deployed DLL Contract: ', dllAddress);
 
   // deploy Attribute Store
-  const attributeStoreAddress = await dispatch(deployAttributeStore());
+  await dispatch(deployAttributeStore());
+  state = getState();
+  const attributeStoreAddress = getAttributeStoreAddress(state);
   console.demo('Deployed Attribute Store Contract: ', attributeStoreAddress);
 
   // deploy Voting Contract
-  const votingAddress = await dispatch(deployVoting());
+  await dispatch(deployVoting());
+  state = getState();
+  const votingAddress = getVotingAddress(state);
   console.demo('Deployed Voting Contract: ', votingAddress);
 
   // deploy Parameterizer
-  const parameterizerAddress = await dispatch(deployParameterizer({
+  await dispatch(deployParameterizer({
     applyStageLen: APPLY_STAGE_LENGTH,
     commitStageLen: COMMIT_STAGE_LENGTH,
     revealStageLen: REVEAL_STAGE_LENGTH,
   }));
+  state = getState();
+  const parameterizerAddress = getParameterizerAddress(state);
   console.demo('Deployed Paramterizer Contract: ', parameterizerAddress);
 
   // deploy Registry
-  const registryAddress = await dispatch(deployRegistry('registry'));
+  await dispatch(deployRegistry('registry'));
+  state = getState();
+  const registryAddress = getRegistryAddress(state);
   console.demo('Deployed Registry Contract: ', registryAddress);
+
+  await ContractObserver.subscribe({ dispatch, getState });
+  console.demo('Initialized Contract Observer');
 
   // approve registry -- owner approves amount to spend
   await dispatch(approve({
@@ -148,7 +178,6 @@ const initializeDataMarketplace = async (dispatch) => {
         userAddress: voterAccount,
         deposit: 100,
         data: {
-          // source: DataSources.IPFS,
           value: {
             name: universityName,
             rank: getRank(),

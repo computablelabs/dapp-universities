@@ -1,5 +1,5 @@
-import { updateListingStatus } from 'reputable/dist/redux/action-creators/registry';
-import { getAppliedListings } from 'reputable/dist/redux/selectors';
+import { updateListingStatus } from '@computable/reputable/dist/redux/action-creators';
+import { getAppliedListings, getListing } from '@computable/reputable/dist/redux/selectors';
 
 const updateListings = ({ dispatch, getState }) => (
   () => {
@@ -7,12 +7,12 @@ const updateListings = ({ dispatch, getState }) => (
     const listings = getAppliedListings(state);
 
     listings.forEach(
-      (listing) => updateListing({ dispatch, listing })
+      (listing) => updateListing({ dispatch, getState, listing })
     );
   }
 );
 
-const updateListing = async ({ dispatch, listing }) => {
+const updateListing = async ({ dispatch, getState, listing }) => {
   const now = Math.floor(Date.now() / 1000);
   const { applicationExpiry } = listing;
   const { name } = listing.data.value;
@@ -21,23 +21,20 @@ const updateListing = async ({ dispatch, listing }) => {
     return;
   }
 
-  const response = await dispatch(
+  await dispatch(
     updateListingStatus(listing.listingHash)
   );
+  const state = getState();
+  const updatedListing = getListing(state, listing.listingHash);
 
-  if (response) {
+  if (updatedListing && updatedListing.whitelisted) {
     console.demo('Updated listing status: ', name);
-  }
-
-  if (response && response.whitelisted) {
     console.demo('Whitelisted: ', name);
-  } else if (response) {
-    console.demo('Removed: ', name);
   }
 };
 
 const initializeListingStatusPolling = ({ dispatch, getState }) => {
-  console.demo('initializing listing status polling');
+  console.demo('Initializing listing status polling');
 
   setInterval(updateListings({ dispatch, getState }), 1000);
 };

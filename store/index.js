@@ -7,9 +7,9 @@ import {
   compose,
 } from 'redux';
 
-import rootReducer from 'reputable/dist/redux/reducers/root';
+import rootReducer from '@computable/reputable/dist/redux/reducers/root';
 
-let store
+let store;
 
 const composedMiddleware = [
   applyMiddleware(thunk),

@@ -6,8 +6,8 @@ import { bindActionCreators } from 'redux';
 import Router from 'next/router';
 
 // Reputable Dependencies
-import { updateListingStatus, challengeListing } from 'reputable/dist/redux/action-creators/registry';
-import { getParticipants, getAppliedListings } from 'reputable/dist/redux/selectors';
+import { updateListingStatus, challengeListing } from '@computable/reputable/dist/redux/action-creators';
+import { getParticipants, getAppliedListings } from '@computable/reputable/dist/redux/selectors';
 
 const mapStateToProps = (state, props) => {
   const participants = getParticipants(state);
