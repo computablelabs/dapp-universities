@@ -87,8 +87,8 @@ To use it, run:
 
 If you do not currently have our recommended version of node installed, run:
 
-- `npm install`
-- `npm use`
+- `nvm install`
+- `nvm use`
 
 ### Run the application
 

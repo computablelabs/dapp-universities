@@ -13,6 +13,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@computable/reputable": "^0.3.0",
     "dotenv": "^6.0.0",
     "dotenv-webpack": "^1.5.7",
     "express": "^4.16.3",
@@ -24,7 +25,6 @@
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
-    "reputable": "github:computablelabs/reputable#v0.2",
     "uuid": "^3.3.2",
     "web3": "^1.0.0-beta.34"
   },

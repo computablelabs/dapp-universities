@@ -22,7 +22,7 @@ class AppWrapper extends App {
   async initialize() {
     const { store } = this.props;
 
-    await initializeDataMarketplace(store.dispatch);
+    await initializeDataMarketplace(store.dispatch, store.getState);
     initializeListingStatusPolling({
       dispatch: store.dispatch,
       getState: store.getState,

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { getWhitelistedListings } from 'reputable/dist/redux/selectors';
+import { getWhitelistedListings } from '@computable/reputable/dist/redux/selectors';
 
 const mapStateToProps = (state, props) => {
   let listings = getWhitelistedListings(state);

@@ -5,8 +5,8 @@ import { bindActionCreators } from 'redux';
 import UUID from 'uuid/v4';
 
 // import { DataSources } from 'reputable/dist/constants';
-import { applyListing } from 'reputable/dist/redux/action-creators/registry';
-import { getParticipants } from 'reputable/dist/redux/selectors';
+import { applyListing } from '@computable/reputable/dist/redux/action-creators';
+import { getParticipants } from '@computable/reputable/dist/redux/selectors';
 
 const mapStateToProps = (state) => ({
   participants: getParticipants(state),
