@@ -119,7 +119,7 @@ const initializeDataMarketplace = async (dispatch, getState) => {
   const registryAddress = getRegistryAddress(state);
   console.demo('Deployed Registry Contract: ', registryAddress);
 
-  await ContractObserver.subscribe({ dispatch, getState });
+  await ContractObserver.subscribe(dispatch, getState);
   console.demo('Initialized Contract Observer');
 
   // approve registry -- owner approves amount to spend
