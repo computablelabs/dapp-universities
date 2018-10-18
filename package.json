@@ -13,7 +13,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@computable/reputable": "^0.3.2",
+    "@computable/reputable": "^0.3.3",
     "dotenv": "^6.0.0",
     "dotenv-webpack": "^1.5.7",
     "express": "^4.16.3",
