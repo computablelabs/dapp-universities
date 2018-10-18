@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { removeListing } from '@computable/reputable/dist/redux/action-creators';
 import { getWhitelistedListings } from '@computable/reputable/dist/redux/selectors';
 
 const mapStateToProps = (state, props) => {
@@ -40,14 +41,41 @@ const mapDispatchToProps = (dispatch) => (
 
 const createContainer = (ComposedComponent) => {
   class Container extends React.Component {
+    constructor() {
+      super();
+
+      this.handleRemoveListing = this.handleRemoveListing.bind(this);
+    }
+
+    async handleRemoveListing({ listingHash, name, userAddress }) {
+      const { dispatch } = this.props;
+
+      console.demo('Listing removed: ', name);
+
+      await dispatch(
+        removeListing({
+          listing: listingHash,
+          userAddress,
+        })
+      );
+    }
+
     render() {
+      const componentProps = {
+        ...this.props,
+        onRemoveListing: this.handleRemoveListing,
+      };
+
       return (
-        <ComposedComponent {...this.props} />
+        <ComposedComponent {...componentProps} />
       );
     }
   }
 
-  return connect(mapStateToProps, mapDispatchToProps)(Container);
+  let Component = connect()(Container);
+  Component = connect(mapStateToProps, mapDispatchToProps)(Component);
+
+  return Component;
 };
 
 export default createContainer;

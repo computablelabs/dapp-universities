@@ -6,7 +6,7 @@ import Container from './container';
 
 class WhitelistedListings extends React.Component {
   render() {
-    const { listings } = this.props;
+    const { listings, onRemoveListing } = this.props;
 
     return (
       <div>
@@ -32,6 +32,7 @@ class WhitelistedListings extends React.Component {
             <tr>
               <th>Name</th>
               <th>Rank</th>
+              <th />
             </tr>
           </thead>
 
@@ -39,7 +40,14 @@ class WhitelistedListings extends React.Component {
             {
               listings.map((listing, idx) => (
                 <tr key={idx}>
-                  <Listing key={idx} {...listing.data.value} />
+                  <Listing
+                    key={idx}
+                    listingHash={listing.listingHash}
+                    owner={listing.owner}
+                    name={listing.data.value.name}
+                    rank={listing.data.value.rank}
+                    onRemoveListing={onRemoveListing}
+                  />
                 </tr>
               ))
             }
@@ -52,10 +60,12 @@ class WhitelistedListings extends React.Component {
 
 WhitelistedListings.propTypes = {
   listings: PropTypes.arrayOf(PropTypes.object),
+  onRemoveListing: PropTypes.func,
 };
 
 WhitelistedListings.defaultProps = {
   listings: [],
+  onRemoveListing: () => {},
 };
 
 export default Container(WhitelistedListings);
